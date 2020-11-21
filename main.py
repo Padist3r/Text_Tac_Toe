@@ -50,9 +50,9 @@ game_on = True
 bot_board = "123456789"
 board = " 1 | 2 | 3 \n 4 | 5 | 6 \n 7 | 8 | 9 "
 
-print("Please press enter to begin --> ")
+print("Please press enter to begin:")
 while game_on:
-    user = input("-->")
+    user = input("--> ")
 
     if user in bot_board and user != "":
         board = board.replace(user, "X", 1)
@@ -95,3 +95,6 @@ while game_on:
         # user asked for an input
         print(board)
         print("Please place an X in an appropriate place")
+
+# TODO Ask the user if they want to play another game before exiting the
+#  program
