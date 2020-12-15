@@ -46,55 +46,64 @@ def check_win(string: str) -> str:
         return "Draw"
 
 
-game_on = True
-bot_board = "123456789"
-board = " 1 | 2 | 3 \n 4 | 5 | 6 \n 7 | 8 | 9 "
+def tictactoe():
+    game_on = True
+    bot_board = "123456789"
+    board = " 1 | 2 | 3 \n 4 | 5 | 6 \n 7 | 8 | 9 "
 
-print("Please press enter to begin:")
-while game_on:
-    user = input("--> ")
+    print("Please press enter to begin:")
+    while game_on:
+        user = input("--> ")
 
-    if user in bot_board and user != "":
-        board = board.replace(user, "X", 1)
-        bot_board = bot_board.replace(user, "", 1)
+        if user in bot_board and user != "":
+            board = board.replace(user, "X", 1)
+            bot_board = bot_board.replace(user, "", 1)
 
-        # checks to see if the last game space has been taken
-        if bot_board == "":
-            pass
+            # checks to see if the last game space has been taken
+            if bot_board == "":
+                pass
+            else:
+                bot1 = bot(bot_board)
+                board = board.replace(bot1, "O", 1)
+                bot_board = bot_board.replace(bot1, "", 1)
+
+            # changes the board so it looks a bit nicer
+            show_board = board
+            for i in board:
+                if i in "123456789":
+                    show_board = show_board.replace(i, "-", 1)
+            print(show_board)
+            # Checks to see if there is a winner
+            check = check_win(show_board)
+            if check == "X":
+                print("X WINS!!")
+                game_on = False
+            elif check == "O":
+                print("O Wins!!")
+                game_on = False
+            elif check == "DRAW":
+                print("DRAW GAME!!")
+                game_on = False
+            # resets variables for the next turn
+            try:
+                del bot1
+                del check
+            except NameError:
+                pass
+
         else:
-            bot1 = bot(bot_board)
-            board = board.replace(bot1, "O", 1)
-            bot_board = bot_board.replace(bot1, "", 1)
+            # If there is an incorrect input the board will be displayed
+            # and the user asked for an input
+            print(board)
+            print("Please place an X in an appropriate place")
 
-        # changes the board so it looks a bit nicer
-        show_board = board
-        for i in board:
-            if i in "123456789":
-                show_board = show_board.replace(i, "-", 1)
-        print(show_board)
-        # Checks to see if there is a winner
-        check = check_win(show_board)
-        if check == "X":
-            print("X WINS!!")
-            game_on = False
-        elif check == "O":
-            print("O Wins!!")
-            game_on = False
-        elif check == "DRAW":
-            print("DRAW GAME!!")
-            game_on = False
-        # resets variables for the next turn
-        try:
-            del bot1
-            del check
-        except NameError:
-            pass
 
+play_again = "y"
+while True:
+    if play_again.casefold() == "y":
+        tictactoe()
+        play_again = input("Would you like to play again? y/n --> ")
+    elif play_again.casefold() == "n":
+        break
     else:
-        # If there is an incorrect input the board will be displayed and the
-        # user asked for an input
-        print(board)
-        print("Please place an X in an appropriate place")
-
-# TODO Ask the user if they want to play another game before exiting the
-#  program
+        play_again = input("Would you like to play again? y/n --> ")
